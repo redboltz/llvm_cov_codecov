@@ -28,7 +28,7 @@ jobs:
       env:
         FLAGS:    -DCMAKE_CXX_COMPILER=clang++
         CFLAGS:   -Werror -g -Wall -Wextra
-        CXXFLAGS: -Werror -g -Wall -Wextra
+        CXXFLAGS: -Werror -g -Wall -Wextra -fprofile-instr-generate -fcoverage-mapping
         LDFLAGS:  -Werror -g -Wall -Wextra
       run: |
          BOOST_ROOT=/home/runner/work/llvm_cov_codecov/llvm_cov_codecov/usr cmake -S ${{ github.workspace }} -B ${{ runner.temp }} ${FLAGS} -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}" -DCMAKE_EXE_LINKER_FLAGS="${LDFLAGS}"
@@ -41,4 +41,5 @@ jobs:
         ctest -VV
     - name: Coverage
       run: |
+        llvm-cov show test/test1 -instr-profile=prof.txt
         curl -Os https://uploader.codecov.io/latest/linux/codecov && chmod +x codecov && ./codecov
