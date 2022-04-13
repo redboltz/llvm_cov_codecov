@@ -31,7 +31,7 @@ jobs:
         CXXFLAGS: -Werror -g -Wall -Wextra
         LDFLAGS:  -Werror -g -Wall -Wextra
       run: |
-         BOOST_ROOT=/home/runner/work/llvm_cov_codecov/lvm_cov_codecov/usr cmake -S ${{ github.workspace }} -B ${{ runner.temp }} ${FLAGS} -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}" -DCMAKE_EXE_LINKER_FLAGS="${LDFLAGS}"
+         BOOST_ROOT=/home/runner/work/llvm_cov_codecov/llvm_cov_codecov/usr cmake -S ${{ github.workspace }} -B ${{ runner.temp }} ${FLAGS} -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}" -DCMAKE_EXE_LINKER_FLAGS="${LDFLAGS}"
     - name: Compile
       run: |
         VERBOSE=1 cmake --build ${{ runner.temp }} --clean-first
