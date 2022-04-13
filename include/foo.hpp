@@ -18,4 +18,5 @@ inline int foo(int a, int b) {
     }
 }
 
+
 #endif // FOO_HPP
