@@ -46,6 +46,7 @@ jobs:
     - name: Coverage
       working-directory: ${{ runner.temp }}
       run: |
+        test/test1 --log_level=all
         llvm-cov show test/test1 -instr-profile=default.profdata > coverage.txt
         cat coverage.txt
         curl -Os https://uploader.codecov.io/latest/linux/codecov && chmod +x codecov && ./codecov
