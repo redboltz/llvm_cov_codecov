@@ -47,7 +47,7 @@ jobs:
       working-directory: ${{ runner.temp }}
       run: |
         test/test1 --log_level=all
-        LLVM_PROFILE_FILE="test1.profraw" ./test1
+        LLVM_PROFILE_FILE="test1.profraw" test/test1
         llvm-profdata merge -sparse test1.profraw -o test1.profdata
         llvm-cov show test/test1 -instr-profile=test1.profdata > coverage.txt
         cat coverage.txt
