@@ -47,6 +47,8 @@ jobs:
       working-directory: ${{ runner.temp }}
       run: |
         test/test1 --log_level=all
-        llvm-cov show test/test1 -instr-profile=default.profdata > coverage.txt
+        LLVM_PROFILE_FILE="test1.profraw" ./test1
+        llvm-profdata merge -sparse test1.profraw -o test1.profdata
+        llvm-cov show test/test1 -instr-profile=test1.profdata > coverage.txt
         cat coverage.txt
         curl -Os https://uploader.codecov.io/latest/linux/codecov && chmod +x codecov && ./codecov
