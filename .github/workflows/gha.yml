@@ -44,6 +44,7 @@ jobs:
       run: |
         ctest -VV
     - name: Coverage
+      working-directory: ${{ runner.temp }}
       run: |
         llvm-cov show test/test1 -instr-profile=default.profdata > coverage.txt
         cat coverage.txt
