@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+  push:
+    branches:
+    - main
+    tags:
+    - '*'
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Cache boost
+      id: cache-boost
+      uses: actions/cache@v1
+      with:
+        path: usr
+        key: ${{ runner.os }}-boost-20220116
+    - name: Build boost
+      if: steps.cache-boost.outputs.cache-hit != 'true'
+      run: ./.github/depends/boost.sh -b 64 -t gcc
+    - name: Configure
+      env:
+        FLAGS:    -DCMAKE_CXX_COMPILER=clang++
+        CFLAGS:   -Werror -g -Wall -Wextra
+        CXXFLAGS: -Werror -g -Wall -Wextra
+        LDFLAGS:  -Werror -g -Wall -Wextra
+      run: |
+         BOOST_ROOT=/home/runner/work/llvm_cov_codecov/lvm_cov_codecov/usr cmake -S ${{ github.workspace }} -B ${{ runner.temp }} ${FLAGS} -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}" -DCMAKE_EXE_LINKER_FLAGS="${LDFLAGS}"
+    - name: Compile
+      run: |
+        VERBOSE=1 cmake --build ${{ runner.temp }} --clean-first
+    - name: Test
+      working-directory: ${{ runner.temp }}
+      run: |
+        ctest -VV
