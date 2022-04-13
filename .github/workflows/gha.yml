@@ -41,5 +41,6 @@ jobs:
         ctest -VV
     - name: Coverage
       run: |
+        find / -name llvm-cov -print
         llvm-cov show test/test1 -instr-profile=prof.txt
         curl -Os https://uploader.codecov.io/latest/linux/codecov && chmod +x codecov && ./codecov
