@@ -49,6 +49,7 @@ jobs:
         test/test1 --log_level=all
         LLVM_PROFILE_FILE="test1.profraw" test/test1
         llvm-profdata merge -sparse test1.profraw -o test1.profdata
-        llvm-cov show test/test1 -instr-profile=test1.profdata > coverage.txt
+        # llvm-cov show test/test1 -instr-profile=test1.profdata > coverage.txt
+        llvm-cov export -instr-profile=test1.profdata test/test1 -format=text > coverage.txt
         cat coverage.txt
         curl -Os https://uploader.codecov.io/latest/linux/codecov && chmod +x codecov && ./codecov
