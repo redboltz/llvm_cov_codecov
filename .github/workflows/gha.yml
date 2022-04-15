@@ -35,6 +35,11 @@ jobs:
     - name: Build boost
       if: steps.cache-boost.outputs.cache-hit != 'true'
       run: ./.github/depends/boost.sh -b 64 -t gcc
+    - name: Build cargo-llvm-codecov-converter
+      run: |
+        git clone https://github.com/maboesanman/cargo-llvm-codecov-converter.git
+        cd cargo-llvm-codecov-converter
+        cargo install cargo-llvm-codecov-converter
     - name: Configure
       env:
         FLAGS:    -DCMAKE_CXX_COMPILER=clang++
@@ -57,6 +62,6 @@ jobs:
         LLVM_PROFILE_FILE="test1.profraw" test/test1
         llvm-profdata merge -sparse test1.profraw -o test1.profdata
         # llvm-cov show test/test1 -instr-profile=test1.profdata > coverage.txt
-        llvm-cov export -instr-profile=test1.profdata test/test1 -format=text > coverage.txt
+        llvm-cov export -instr-profile=test1.profdata test/test1 | cargo-llvm-codecov-converter > coverage.txt
         cat coverage.txt
         curl -Os https://uploader.codecov.io/latest/linux/codecov && chmod +x codecov && ./codecov
