@@ -19,4 +19,5 @@ BOOST_AUTO_TEST_CASE( case2 ) {
     BOOST_TEST(foo(2, 1) == 1);
 }
 
+
 BOOST_AUTO_TEST_SUITE_END()
