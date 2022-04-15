@@ -15,17 +15,10 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Cache LLVM and Clang
-      id: cache-llvm
-      uses: actions/cache@v2
-      with:
-        path: usr
-        key: ${{ runner.os }}-llvm-20220415
     - name: Install LLVM and Clang
       uses: KyleMayes/install-llvm-action@v1
       with:
         version: "14.0"
-        cached: ${{ steps.cache-llvm.outputs.cache-hit }}
     - name: Cache boost
       id: cache-boost
       uses: actions/cache@v2
