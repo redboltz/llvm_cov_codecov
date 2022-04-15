@@ -15,6 +15,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: Install LLVM and Clang
       uses: KyleMayes/install-llvm-action@v1
       with:
@@ -54,7 +56,6 @@ jobs:
         test/test1 --log_level=all
         LLVM_PROFILE_FILE="test1.profraw" test/test1
         llvm-profdata merge -sparse test1.profraw -o test1.profdata
-        # llvm-cov show test/test1 -instr-profile=test1.profdata > coverage.txt
         llvm-cov export -instr-profile=test1.profdata test/test1 | cargo-llvm-codecov-converter > coverage.json
         cat coverage.json
         curl -Os https://uploader.codecov.io/latest/linux/codecov && chmod +x codecov && ./codecov
