@@ -28,6 +28,12 @@ jobs:
     - name: Build boost
       if: steps.cache-boost.outputs.cache-hit != 'true'
       run: ./.github/depends/boost.sh -b 64 -t gcc
+    - name: Cache cargo-llvm-codecov-converter
+      id: cache-cargo-llvm-codecov-converter
+      uses: actions/cache@v2
+      with:
+        path: usr
+        key: ${{ runner.os }}-boost-20220415
     - name: Build cargo-llvm-codecov-converter
       run: |
         git clone https://github.com/maboesanman/cargo-llvm-codecov-converter.git
@@ -56,5 +62,5 @@ jobs:
         llvm-profdata merge -sparse test1.profraw -o test1.profdata
         # llvm-cov show test/test1 -instr-profile=test1.profdata > coverage.txt
         llvm-cov export -instr-profile=test1.profdata test/test1 | cargo-llvm-codecov-converter > coverage.json
-        cat coverage.txt
+        cat coverage.json
         curl -Os https://uploader.codecov.io/latest/linux/codecov && chmod +x codecov && ./codecov
