@@ -53,8 +53,9 @@ jobs:
     - name: Coverage
       run: |
         pwd
-        LLVM_PROFILE_FILE="test1.profraw"  ${{ runner.temp }}/test/test1
-        llvm-profdata merge -sparse test1.profraw -o test1.profdata
+        find -name default.profraw
+        #LLVM_PROFILE_FILE="test1.profraw"  ${{ runner.temp }}/test/test1
+        llvm-profdata merge -sparse default.profraw -o test1.profdata
         llvm-cov export -instr-profile=test1.profdata test/test1 > coverage.json
         #llvm-cov export -instr-profile=test1.profdata test/test1 | cargo-llvm-codecov-converter > coverage.json
         cat coverage.json
