@@ -28,12 +28,6 @@ jobs:
     - name: Build boost
       if: steps.cache-boost.outputs.cache-hit != 'true'
       run: ./.github/depends/boost.sh -b 64 -t gcc
-    - name: Cache cargo-llvm-codecov-converter
-      id: cache-cargo-llvm-codecov-converter
-      uses: actions/cache@v2
-      with:
-        path: usr
-        key: ${{ runner.os }}-boost-20220415
     - name: Build cargo-llvm-codecov-converter
       run: |
         git clone https://github.com/maboesanman/cargo-llvm-codecov-converter.git
