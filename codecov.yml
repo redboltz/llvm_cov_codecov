@@ -30,5 +30,5 @@ ignore:
   - "example"
   - "external"
 
-fixes:
-  - "/home/runner/work/llvm_cov_codecov/llvm_cov_codecov/::"
+#fixes:
+#  - "/home/runner/work/llvm_cov_codecov/llvm_cov_codecov/::"
