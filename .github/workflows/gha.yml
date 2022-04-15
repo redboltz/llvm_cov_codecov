@@ -15,6 +15,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 2
     - name: Install LLVM and Clang
       uses: KyleMayes/install-llvm-action@v1
       with:
@@ -50,8 +52,6 @@ jobs:
         ctest -VV
     - name: Coverage
       working-directory: ${{ runner.temp }}
-      with:
-        fetch-depth: 2
       run: |
         test/test1 --log_level=all
         LLVM_PROFILE_FILE="test1.profraw" test/test1
