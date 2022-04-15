@@ -55,7 +55,8 @@ jobs:
       run: |
         LLVM_PROFILE_FILE="test1.profraw" test/test1
         llvm-profdata merge -sparse test1.profraw -o test1.profdata
-        llvm-cov export -instr-profile=test1.profdata test/test1 | cargo-llvm-codecov-converter > coverage.json
+        llvm-cov export -instr-profile=test1.profdata test/test1 > coverage.json
+        #llvm-cov export -instr-profile=test1.profdata test/test1 | cargo-llvm-codecov-converter > coverage.json
         cat coverage.json
         #curl -Os https://uploader.codecov.io/latest/linux/codecov && chmod +x codecov && ./codecov
         bash <(curl -s https://codecov.io/bash) -f coverage.json || echo "Codecov did not collect coverage reports"
