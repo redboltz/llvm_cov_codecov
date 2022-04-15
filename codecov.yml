@@ -12,20 +12,20 @@ coverage:
     patch: yes
     changes: no
 
-#parsers:
-#  gcov:
-#    branch_detection:
-#      conditional: yes
-#      loop: yes
-#      method: no
-#      macro: no
+parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: no
+      macro: no
 
 comment:
   layout: "header, diff"
   behavior: default
   require_changes: no
 
-ignore:
-  - "test"
-  - "example"
-  - "external"
+#ignore:
+#  - "test"
+#  - "example"
+#  - "external"
